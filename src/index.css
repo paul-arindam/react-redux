@@ -16,6 +16,14 @@ textarea {
   font-size: 1.6rem;
   font-family: Helvetica, Arial, sans-serif;
 }
+
+a {
+  text-decoration: none;
+}
+li {
+  list-style: none;
+}
+
 .grid-container {
   display: grid;
   grid-template-areas: "header" "main" "footer";
@@ -36,15 +44,24 @@ header {
 
 header a {
   color: white;
-  text-decoration: none;
 }
 
-a:hover {
+header a:hover {
   color: aqua;
 }
 
 main {
   grid-area: main;
+}
+.content {
+  display: flex;
+  flex-wrap: wrap;
+}
+.main {
+  flex: 1 70rem;
+}
+.sidebar {
+  flex: 1 10rem;
 }
 
 footer {
@@ -55,4 +72,59 @@ footer {
   background-color: black;
   color: white;
   font-size: 1.5rem;
+}
+
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+.products li {
+  flex: 0 1 20rem;
+  height: 42rem;
+  padding: 1rem;
+  margin: 0.6rem;
+  box-shadow: 0.3rem 0.4rem rgb(204, 204, 204);
+}
+.product {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+.product img {
+  width: 30rem;
+  height: 30rem;
+}
+.productName {
+  font-size: 2rem;
+  font-weight: bold;
+}
+.product-price {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.product-price div,
+.product-price button {
+  text-align: center;
+  flex: 1;
+}
+.product-price div {
+  font-size: 2rem;
+}
+.button {
+  padding: 1rem;
+  border: 0.1rem rgb(204, 204, 204) solid;
+  border-radius: 0.4rem;
+  background-color: #f0f0f0;
+}
+.button:hover {
+  border: 0.1rem rgb(37, 139, 139) solid;
+}
+.button.primary {
+  background-color: aqua;
 }

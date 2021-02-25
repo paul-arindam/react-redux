@@ -1,0 +1,84 @@
+{
+    "products":[
+        {
+            "_id":1,
+            "title": "Product 1",
+            "image":"/img/p1.jpg",
+            "description":"About Product 1",
+            "price":25000,
+            "colors":["red","black","blue"]
+        },
+        {
+            "_id":2,
+            "title": "Product 2",
+            "image":"/img/p2.jpg",
+            "description":"About Product 2",
+            "price":21000,
+            "colors":["white","blue"]
+        },
+        {
+            "_id":3,
+            "title": "Product 3",
+            "image":"/img/p3.jpg",
+            "description":"About Product 3",
+            "price":15000,
+            "colors":["red","black","blue","white"]
+        },
+        {
+            "_id":4,
+            "title": "Product 4",
+            "image":"/img/p4.jpg",
+            "description":"About Product 4",
+            "price":20000,
+            "colors":["red","gray","green"]        
+        },
+        {
+            "_id":5,
+            "title": "Product 5",
+            "image":"/img/p5.jpg",
+            "description":"About Product 5",
+            "price":32000,
+            "colors":["red","black","green"]        
+        },
+        {
+            "_id":6,
+            "title": "Product 6",
+            "image":"/img/p6.jpg",
+            "description":"About Product 6",
+            "price":12000,
+            "colors":["green","gray","blue"]        
+        },
+        {
+            "_id":7,
+            "title": "Product 7",
+            "image":"/img/p7.jpg",
+            "description":"About Product 7",
+            "price":33000,
+            "colors":["red","white","blue"]        
+        },
+        {
+            "_id":8,
+            "title": "Product 8",
+            "image":"/img/p8.jpg",
+            "description":"About Product 8",
+            "price":22500,
+            "colors":["red","black","blue"]        
+        },
+        {
+            "_id":9,
+            "title": "Product 9",
+            "image":"/img/p9.jpg",
+            "description":"About Product 9",
+            "price":28000,
+            "colors":["white","gray","blue"]        
+        },
+        {
+            "_id":10,
+            "title": "Product 10",
+            "image":"/img/p10.jpg",
+            "description":"About Product 10",
+            "price":37000,
+            "colors":["white","black","blue"]        
+        }
+    ]
+}
