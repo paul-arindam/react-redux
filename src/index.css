@@ -84,10 +84,10 @@ footer {
 }
 .products li {
   flex: 0 1 20rem;
-  height: 42rem;
+  height: 47rem;
   padding: 1rem;
-  margin: 0.6rem;
-  box-shadow: 0.3rem 0.4rem rgb(204, 204, 204);
+  margin: 1rem;
+  box-shadow: 0.5rem 0.5rem rgb(218, 218, 218);
 }
 .product {
   display: flex;
@@ -96,8 +96,8 @@ footer {
   height: 100%;
 }
 .product img {
-  width: 30rem;
-  height: 30rem;
+  max-width: 34rem;
+  max-height: 34rem;
 }
 .productName {
   font-size: 2rem;
@@ -121,10 +121,27 @@ footer {
   border: 0.1rem rgb(204, 204, 204) solid;
   border-radius: 0.4rem;
   background-color: #f0f0f0;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 .button:hover {
   border: 0.1rem rgb(37, 139, 139) solid;
 }
 .button.primary {
-  background-color: aqua;
+  background-color: rgb(2, 173, 173);
+  color: rgb(255, 255, 255);
+}
+
+.filter {
+  display: flex;
+  padding: 1rem;
+  margin: 1rem;
+  border-bottom: 0.1rem solid gray;
+  justify-content: space-between;
+}
+.filter div {
+  flex: 1;
+}
+select {
+  padding: 0.3rem;
 }
