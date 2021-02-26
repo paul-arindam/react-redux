@@ -1,14 +1,34 @@
 import React, { Component } from "react";
 
+import Modal from "react-modal";
+
 export class Products extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      product: null,
+    };
+  }
+
+  openModal = (product) => {
+    this.setState({ product });
+  };
+  closeModal = () => {
+    this.setState({ product: null });
+  };
+
   render() {
+    const { product } = this.state;
     return (
       <div>
         <ul className="products">
           {this.props.products.map((product) => (
             <li key={product._id}>
               <div className="product">
-                <a href={"#" + product._id}>
+                <a
+                  href={"#" + product._id}
+                  onClick={() => this.openModal(product)}
+                >
                   <img src={product.image} alt={product.title}></img>
                   <p className="productName">{product.title}</p>
                 </a>
@@ -25,6 +45,44 @@ export class Products extends Component {
             </li>
           ))}
         </ul>
+        {product && (
+          <Modal
+            isOpen={true}
+            onRequestClose={this.closeModal}
+            ariaHideApp={false}
+          >
+            <button className="close-modal" onClick={this.closeModal}>
+              X
+            </button>
+            <div className="product-details">
+              <div className="image-container">
+                <img src={product.image} alt={product.title} />
+              </div>
+              <div className="other-details">
+                <h3>{product.title}</h3>
+                <p>{product.description}</p>
+                <p>
+                  Colours:{" "}
+                  {product.colors.map((color) => (
+                    <span className="color-tabs" key={color}>
+                      {color}{" "}
+                    </span>
+                  ))}
+                </p>
+                <p>&#8377;{product.price}</p>
+                <button
+                  className="button primary"
+                  onClick={() => {
+                    this.props.addToCart(product);
+                    this.closeModal();
+                  }}
+                >
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          </Modal>
+        )}
       </div>
     );
   }
