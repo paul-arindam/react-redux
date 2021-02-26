@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Cart from "./components/Cart";
 import FilterBar from "./components/FilterBar";
 import Products from "./components/Products";
 
@@ -11,6 +12,7 @@ class App extends Component {
       products: data.products,
       color: "",
       sort: "lowest",
+      cartItems: [],
     };
   }
 
@@ -50,6 +52,29 @@ class App extends Component {
     }
   };
 
+  addToCartHandler = (product) => {
+    let cartItemsCopy = [...this.state.cartItems];
+    let alreadyInCart = false;
+    cartItemsCopy.forEach((item) => {
+      if (item._id === product._id) {
+        item.count++;
+        alreadyInCart = true;
+      }
+    });
+    if (!alreadyInCart) {
+      cartItemsCopy.push({ ...product, count: 1 });
+    }
+    this.setState({ cartItems: cartItemsCopy });
+  };
+
+  removeCartItemHandler = (item) => {
+    let cartItemsCopy = [...this.state.cartItems];
+
+    this.setState({
+      cartItems: cartItemsCopy.filter((product) => product._id !== item._id),
+    });
+  };
+
   render() {
     return (
       <div className="grid-container">
@@ -68,9 +93,17 @@ class App extends Component {
               />
               {this.state.products.length === 0 &&
                 "No Products available for the selected colour"}
-              <Products products={this.state.products} />
+              <Products
+                products={this.state.products}
+                addToCart={this.addToCartHandler}
+              />
             </div>
-            <div className="sidebar">Cart Items</div>
+            <div className="sidebar">
+              <Cart
+                cartItems={this.state.cartItems}
+                removeCartItem={this.removeCartItemHandler}
+              />
+            </div>
           </div>
         </main>
         <footer>&copy; {date} All rights reserved</footer>
