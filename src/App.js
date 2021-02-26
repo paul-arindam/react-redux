@@ -12,7 +12,9 @@ class App extends Component {
       products: data.products,
       color: "",
       sort: "lowest",
-      cartItems: [],
+      cartItems: JSON.parse(localStorage.getItem("persistentCartItem"))
+        ? JSON.parse(localStorage.getItem("persistentCartItem"))
+        : [],
     };
   }
 
@@ -65,14 +67,22 @@ class App extends Component {
       cartItemsCopy.push({ ...product, count: 1 });
     }
     this.setState({ cartItems: cartItemsCopy });
+    localStorage.setItem("persistentCartItem", JSON.stringify(cartItemsCopy));
   };
 
   removeCartItemHandler = (item) => {
     let cartItemsCopy = [...this.state.cartItems];
-
+    let filteredItems = cartItemsCopy.filter(
+      (product) => product._id !== item._id
+    );
     this.setState({
-      cartItems: cartItemsCopy.filter((product) => product._id !== item._id),
+      cartItems: filteredItems,
     });
+    localStorage.setItem("persistentCartItem", JSON.stringify(filteredItems));
+  };
+
+  placeOrderHandler = (order) => {
+    console.log(order.items);
   };
 
   render() {
@@ -102,6 +112,7 @@ class App extends Component {
               <Cart
                 cartItems={this.state.cartItems}
                 removeCartItem={this.removeCartItemHandler}
+                placeOrder={this.placeOrderHandler}
               />
             </div>
           </div>
