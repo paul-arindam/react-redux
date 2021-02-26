@@ -1,6 +1,32 @@
 import React, { Component } from "react";
 
 export class Cart extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "",
+      email: "",
+      phone: "",
+      address: "",
+      showCheckOut: false,
+    };
+  }
+
+  handleInput = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  placeOrder = (event) => {
+    event.preventDefault();
+    const order = {
+      name: this.state.name,
+      email: this.state.email,
+      phone: this.state.phone,
+      address: this.state.address,
+      items: this.props.cartItems,
+    };
+    this.props.placeOrder(order);
+  };
   render() {
     const { cartItems } = this.props;
     return (
@@ -43,12 +69,84 @@ export class Cart extends Component {
           {cartItems.length !== 0 && (
             <div className="total">
               <span>
-                Total: &#8377;{" "}
-                {cartItems.reduce((a, c) => a + c.price * c.count, 0)}
+                <b>
+                  Total: &#8377;{" "}
+                  {cartItems.reduce((a, c) => a + c.price * c.count, 0)}
+                </b>
               </span>
-              <div className="right">
-                <button className="button primary">CheckOut</button>
-              </div>
+              {!this.state.showCheckOut && (
+                <div className="right">
+                  <button
+                    className="button primary"
+                    onClick={() => {
+                      this.setState({ showCheckOut: true });
+                    }}
+                  >
+                    CheckOut
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+          {this.state.showCheckOut && (
+            <div className="checkout-form">
+              <h3>Enter Your Details</h3>
+              <form onSubmit={this.placeOrder}>
+                <label htmlFor="name">Name</label>
+                <br />
+                <input
+                  type="text"
+                  name="name"
+                  required
+                  onChange={this.handleInput}
+                />
+                <br />
+
+                <label htmlFor="email">Email</label>
+                <br />
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  onChange={this.handleInput}
+                />
+                <br />
+
+                <label htmlFor="phone">Phone</label>
+                <br />
+                <input
+                  type="tel"
+                  name="phone"
+                  pattern="[0-9]{10}"
+                  required
+                  onChange={this.handleInput}
+                />
+                <br />
+
+                <label htmlFor="address">Address</label>
+                <br />
+                <input
+                  type="text"
+                  name="address"
+                  required
+                  onChange={this.handleInput}
+                />
+                <br />
+
+                <div className="button-container">
+                  <button type="submit" className="button primary">
+                    Place Order
+                  </button>
+                  <button
+                    className="button secondary"
+                    onClick={() => {
+                      this.setState({ showCheckOut: false });
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
             </div>
           )}
         </div>
