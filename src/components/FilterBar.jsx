@@ -43,7 +43,6 @@ class FilterBar extends Component {
             <option value="white">White</option>
             <option value="gray">Gray</option>
             <option value="green">Green</option>
-            <option value="metalBlue">Metallic-Blue</option>
           </select>
         </div>
       </div>

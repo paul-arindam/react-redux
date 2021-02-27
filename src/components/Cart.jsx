@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { removeFromCart } from "../actions/cartActions";
 
-export class Cart extends Component {
+class Cart extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -57,7 +59,7 @@ export class Cart extends Component {
                   <div className="right">
                     <button
                       className="button"
-                      onClick={() => this.props.removeCartItem(item)}
+                      onClick={() => this.props.removeFromCart(item)}
                     >
                       Remove
                     </button>
@@ -155,4 +157,6 @@ export class Cart extends Component {
   }
 }
 
-export default Cart;
+export default connect((state) => ({ cartItems: state.cart.cartItems }), {
+  removeFromCart,
+})(Cart);

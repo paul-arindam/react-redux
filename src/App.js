@@ -2,20 +2,20 @@ import React, { Component } from "react";
 import Cart from "./components/Cart";
 import FilterBar from "./components/FilterBar";
 import Products from "./components/Products";
-import data from "./data.json";
+//import data from "./data.json";    //local data stored in JSON file
 import store from "./store";
 import { Provider } from "react-redux";
 
 class App extends Component {
   constructor() {
-    super();
+    super(); //needed when not using redux
     this.state = {
-      products: data.products,
+      //products: data.products,
       // color: "",             //without redux
       // sort: "lowest",
-      cartItems: JSON.parse(localStorage.getItem("persistentCartItem"))
-        ? JSON.parse(localStorage.getItem("persistentCartItem"))
-        : [],
+      // cartItems: JSON.parse(localStorage.getItem("persistentCartItem"))
+      //   ? JSON.parse(localStorage.getItem("persistentCartItem"))
+      //   : [],
     };
   }
 
@@ -55,36 +55,36 @@ class App extends Component {
   //   }
   // };
 
-  addToCartHandler = (product) => {
-    let cartItemsCopy = [...this.state.cartItems];
-    let alreadyInCart = false;
-    cartItemsCopy.forEach((item) => {
-      if (item._id === product._id) {
-        item.count++;
-        alreadyInCart = true;
-      }
-    });
-    if (!alreadyInCart) {
-      cartItemsCopy.push({ ...product, count: 1 });
-    }
-    this.setState({ cartItems: cartItemsCopy });
-    localStorage.setItem("persistentCartItem", JSON.stringify(cartItemsCopy));
-  };
+  // addToCartHandler = (product) => {
+  //   let cartItemsCopy = [...this.state.cartItems];
+  //   let alreadyInCart = false;
+  //   cartItemsCopy.forEach((item) => {
+  //     if (item._id === product._id) {
+  //       item.count++;
+  //       alreadyInCart = true;
+  //     }
+  //   });
+  //   if (!alreadyInCart) {
+  //     cartItemsCopy.push({ ...product, count: 1 });
+  //   }
+  //   this.setState({ cartItems: cartItemsCopy });
+  //   localStorage.setItem("persistentCartItem", JSON.stringify(cartItemsCopy));
+  // };
 
-  removeCartItemHandler = (item) => {
-    let cartItemsCopy = [...this.state.cartItems];
-    let filteredItems = cartItemsCopy.filter(
-      (product) => product._id !== item._id
-    );
-    this.setState({
-      cartItems: filteredItems,
-    });
-    localStorage.setItem("persistentCartItem", JSON.stringify(filteredItems));
-  };
+  // removeCartItemHandler = (item) => {
+  //   let cartItemsCopy = [...this.state.cartItems];
+  //   let filteredItems = cartItemsCopy.filter(
+  //     (product) => product._id !== item._id
+  //   );
+  //   this.setState({
+  //     cartItems: filteredItems,
+  //   });
+  //   localStorage.setItem("persistentCartItem", JSON.stringify(filteredItems));
+  // };
 
-  placeOrderHandler = (order) => {
-    console.log(order.items);
-  };
+  // placeOrderHandler = (order) => {
+  //   console.log(order.items);
+  // };
 
   render() {
     return (
@@ -103,18 +103,16 @@ class App extends Component {
                 // filterProducts={this.filterProductsHandler}
                 // sortProducts={this.sortProductsHandler}
                 />
-                {this.state.products.length === 0 &&
-                  "No Products available for the selected colour"}
                 <Products
-                  // products={this.state.products}
-                  addToCart={this.addToCartHandler}
+                // products={this.state.products}    //without redux
+                // addToCart={this.addToCartHandler}
                 />
               </div>
               <div className="sidebar">
                 <Cart
-                  cartItems={this.state.cartItems}
-                  removeCartItem={this.removeCartItemHandler}
-                  placeOrder={this.placeOrderHandler}
+                // cartItems={this.state.cartItems}
+                // removeCartItem={this.removeCartItemHandler}    //without redux
+                // placeOrder={this.placeOrderHandler}
                 />
               </div>
             </div>
