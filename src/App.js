@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import Cart from "./components/Cart";
 import FilterBar from "./components/FilterBar";
 import Products from "./components/Products";
-
 import data from "./data.json";
+import store from "./store";
+import { Provider } from "react-redux";
 
 class App extends Component {
   constructor() {
@@ -87,38 +88,40 @@ class App extends Component {
 
   render() {
     return (
-      <div className="grid-container">
-        <header>
-          <a href="/">Project</a>
-        </header>
-        <main>
-          <div className="content">
-            <div className="main">
-              <FilterBar
-                count={this.state.products.length}
-                color={this.state.color}
-                sort={this.state.sort}
-                filterProducts={this.filterProductsHandler}
-                sortProducts={this.sortProductsHandler}
-              />
-              {this.state.products.length === 0 &&
-                "No Products available for the selected colour"}
-              <Products
-                products={this.state.products}
-                addToCart={this.addToCartHandler}
-              />
+      <Provider store={store}>
+        <div className="grid-container">
+          <header>
+            <a href="/">Project</a>
+          </header>
+          <main>
+            <div className="content">
+              <div className="main">
+                <FilterBar
+                  count={this.state.products.length}
+                  color={this.state.color}
+                  sort={this.state.sort}
+                  filterProducts={this.filterProductsHandler}
+                  sortProducts={this.sortProductsHandler}
+                />
+                {this.state.products.length === 0 &&
+                  "No Products available for the selected colour"}
+                <Products
+                  products={this.state.products}
+                  addToCart={this.addToCartHandler}
+                />
+              </div>
+              <div className="sidebar">
+                <Cart
+                  cartItems={this.state.cartItems}
+                  removeCartItem={this.removeCartItemHandler}
+                  placeOrder={this.placeOrderHandler}
+                />
+              </div>
             </div>
-            <div className="sidebar">
-              <Cart
-                cartItems={this.state.cartItems}
-                removeCartItem={this.removeCartItemHandler}
-                placeOrder={this.placeOrderHandler}
-              />
-            </div>
-          </div>
-        </main>
-        <footer>&copy; {date} All rights reserved</footer>
-      </div>
+          </main>
+          <footer>&copy; {date} All rights reserved</footer>
+        </div>
+      </Provider>
     );
   }
 }

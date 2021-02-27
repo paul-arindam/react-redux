@@ -26,9 +26,9 @@ mongoose.connect(
 app.get("/api/products", async (req, res) => {
   try {
     const products = await Products.find();
-    res.json(products);
+    res.send(products);
   } catch (err) {
-    res.json({ ErrorMessage: err });
+    res.send(err);
   }
 });
 
@@ -37,7 +37,7 @@ app.post("/api/products", async (req, res) => {
   try {
     const newProduct = new Products(req.body);
     const savedProduct = await newProduct.save();
-    res.json(savedProduct);
+    res.send(savedProduct);
   } catch (err) {
     res.json({ ErrorMessage: err });
   }
