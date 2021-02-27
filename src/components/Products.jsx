@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Modal from "react-modal";
 import { connect } from "react-redux";
 import { fetchProducts } from "../actions/productsActions";
+import { addToCart } from "../actions/cartActions";
 
 class Products extends Component {
   constructor(props) {
@@ -101,5 +102,6 @@ export default connect(
   (state) => ({ products: state.products.filteredItems }),
   {
     fetchProducts,
+    addToCart,
   }
 )(Products);
