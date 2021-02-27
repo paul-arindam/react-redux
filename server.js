@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const Products = require("./backend/models/Products");
+const Orders = require("./backend/models/Orders");
 const app = express();
 const port = process.env.PORT || 80;
 
@@ -22,6 +23,7 @@ mongoose.connect(
   }
 );
 
+//_______PRODUCTS APIs_______
 //GET All Products
 app.get("/api/products", async (req, res) => {
   try {
@@ -47,6 +49,23 @@ app.post("/api/products", async (req, res) => {
 app.delete("/api/products/:id", async (req, res) => {
   const deleteProduct = await Products.findByIdAndDelete(req.params.id);
   res.json(deleteProduct);
+});
+
+//_______ORDERS APIs_______
+//Place an order
+app.post("/api/orders", async (req, res) => {
+  if (
+    !req.body.name ||
+    !req.body.email ||
+    !req.body.phone ||
+    !req.body.address ||
+    !req.body.total ||
+    !req.body.cartItems
+  ) {
+    return res.send({ message: "Data is required" });
+  }
+  const order = await Orders(req.body).save();
+  res.send(order);
 });
 
 //Create SERVER
