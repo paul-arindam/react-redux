@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { removeFromCart } from "../actions/cartActions";
+import { createOrder, clearOrder } from "../actions/orderActions";
+import Modal from "react-modal";
+import Moment from "react-moment";
 
 class Cart extends Component {
   constructor(props) {
@@ -25,12 +28,19 @@ class Cart extends Component {
       email: this.state.email,
       phone: this.state.phone,
       address: this.state.address,
-      items: this.props.cartItems,
+      cartItems: this.props.cartItems,
+      total: this.props.cartItems.reduce((a, c) => a + c.price * c.count, 0),
     };
-    this.props.placeOrder(order);
+    this.props.createOrder(order);
+    console.log(order);
   };
+  closeModal = () => {
+    this.props.clearOrder();
+  };
+
   render() {
-    const { cartItems } = this.props;
+    console.log(this.props.order);
+    const { cartItems, order } = this.props;
     return (
       <div>
         {cartItems.length === 0 ? (
@@ -41,6 +51,64 @@ class Cart extends Component {
           <div className="cart cartHeader">
             <span>{cartItems.length} Items in Cart</span>
           </div>
+        )}
+        {order && (
+          <Modal
+            isOpen={true}
+            onRequestClose={this.closeModal}
+            ariaHideApp={false}
+          >
+            <button className="close-modal" onClick={this.closeModal}>
+              X
+            </button>
+            <div className="order-details">
+              <h3 className="successMessage">
+                Your Order was Placed Successfully
+              </h3>
+              <h2>Invoice Number: {order._id}</h2>
+              <ul>
+                <li>
+                  <div>Name:</div>
+                  <div>{order.name}</div>
+                </li>
+                <li>
+                  <div>Email:</div>
+                  <div>{order.email}</div>
+                </li>
+
+                <li>
+                  <div>Phone:</div>
+                  <div>{order.phone}</div>
+                </li>
+                <li>
+                  <div>Address:</div>
+                  <div>{order.address}</div>
+                </li>
+                <li>
+                  <div>Cart Items: </div>
+                  <div>
+                    {order.cartItems.map((item) => (
+                      <div key={item._id}>
+                        <i>{item.count}</i>
+                        {" x "}
+                        {item.title}
+                      </div>
+                    ))}
+                  </div>
+                </li>
+                <li>
+                  <div>Total: </div>
+                  <div>&#8377;{order.total}</div>
+                </li>
+                <li>
+                  <div>Order Placed on: </div>
+                  <div>
+                    <Moment>{order.date}</Moment>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </Modal>
         )}
         <div>
           <div className="cart">
@@ -157,6 +225,14 @@ class Cart extends Component {
   }
 }
 
-export default connect((state) => ({ cartItems: state.cart.cartItems }), {
-  removeFromCart,
-})(Cart);
+export default connect(
+  (state) => ({
+    order: state.order.order,
+    cartItems: state.cart.cartItems,
+  }),
+  {
+    removeFromCart,
+    createOrder,
+    clearOrder,
+  }
+)(Cart);
