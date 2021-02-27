@@ -34,6 +34,18 @@ app.get("/api/products", async (req, res) => {
   }
 });
 
+//SEARCH PRODUCTS
+app.get("/api/products/:key", async (req, res) => {
+  try {
+    const searchResults = await Products.find({
+      title: { $regex: req.params.key, $options: "i" },
+    });
+    res.send(searchResults);
+  } catch (err) {
+    res.send(err);
+  }
+});
+
 //Create Product
 app.post("/api/products", async (req, res) => {
   try {
