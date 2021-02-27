@@ -2,6 +2,7 @@ import {
   FETCH_PRODUCTS,
   FILTER_PRODUCT_BY_COLOR,
   ORDER_PRODUCTS_BY_PRICE,
+  SEARCH_PRODUCTS,
 } from "../action-types/types";
 
 export const fetchProducts = () => async (dispatch) => {
@@ -10,6 +11,16 @@ export const fetchProducts = () => async (dispatch) => {
   console.log(data);
   dispatch({
     type: FETCH_PRODUCTS,
+    payload: data,
+  });
+};
+
+export const searchProducts = (key) => async (dispatch) => {
+  const res = await fetch("/api/products/" + key);
+  const data = await res.json();
+  console.log(data);
+  dispatch({
+    type: SEARCH_PRODUCTS,
     payload: data,
   });
 };

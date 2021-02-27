@@ -1,8 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { filterProducts, sortProducts } from "../actions/productsActions";
+import {
+  filterProducts,
+  sortProducts,
+  searchProducts,
+} from "../actions/productsActions";
 
 class FilterBar extends Component {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = { key: "" };
+  // }
+  handleInput = (event) => {
+    this.setState({ key: event.target.value });
+  };
+
   render() {
     return !this.props.filteredProducts ? (
       <div>Loading...</div>
@@ -10,6 +22,20 @@ class FilterBar extends Component {
       <div className="filter">
         <div className="filter-result">
           {this.props.filteredProducts.length} Products Available
+        </div>
+        <div className="filter-search">
+          <input
+            type="text"
+            name="search"
+            required
+            onChange={this.handleInput}
+          />
+          <button
+            type="submit"
+            onClick={() => this.props.searchProducts(this.state.key)}
+          >
+            search
+          </button>
         </div>
         <div className="filter-sort">
           Order By{"  "}
@@ -57,5 +83,5 @@ export default connect(
     products: state.products.items,
     filteredProducts: state.products.filteredItems,
   }),
-  { filterProducts, sortProducts }
+  { filterProducts, sortProducts, searchProducts }
 )(FilterBar);
